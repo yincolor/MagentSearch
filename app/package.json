@@ -1,0 +1,12 @@
+{
+	"name":"btsearch",
+	"version":"0.0.1",
+	"description":"",
+	"main":"main.js",
+	"script":{
+		"test":"echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords":[],
+	"author":"",
+	"license":"ISC"
+}

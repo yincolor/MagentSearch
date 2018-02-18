@@ -1,0 +1,10 @@
+一个列表项的标准：
+【
+<span>种子名称</span>
+<button onclick="setMagent(this)">复制磁力链接</button>
+<button onclick="setThunder(this)">复制迅雷链接</button>
+<br>
+<span>磁力链接地址</span>
+<br>
+<span>迅雷链接地址</span>
+】
