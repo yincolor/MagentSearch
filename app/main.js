@@ -5,9 +5,10 @@ const path = require('path');
 const url = require("url");
 const http = require('http');
 const ipcMain = require('electron').ipcMain
-const runbt = require('./main-process/runbt');
+const driver = require('./main-process/HttpDriver');//自定义的搜索引擎
 
 var theNowSearchText = "";
+var theNowSearchDriver = "";
 let win;//这是显示的窗口
 
 const createWindow = () =>{
@@ -21,7 +22,7 @@ const createWindow = () =>{
         slashes:true
     });
     win.loadURL(URL);
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
     win.setMenu(null);
     win.on('close',()=>{
         win = null;
@@ -37,15 +38,15 @@ app.on('window-all-close',()=>{
 });
 
 //监听渲染进程传送的搜索数据请求通信
-ipcMain.on("SpliderPlease",function(event,arg)
+ipcMain.on("SpliderPlease",function(event,arg,search_driver)
 {
     theNowSearchText = arg;
-    console.log("主进程监听到爬虫请求，爬虫关键字为："+arg);
-    var searchText = arg;
-    runbt.runbt_get(searchText,win,"Next_Search_Text");
+    theNowSearchDriver = search_driver;
+    console.log("主进程监听到爬虫请求，爬虫关键字为："+arg+"搜索引擎为："+search_driver);
+    driver.get(theNowSearchText,search_driver,win,"Next_Search_Text");
 });
 
 //请求更多的数据
 ipcMain.on("SpliderMorePlease",function(event){
-    runbt.runbt_get(theNowSearchText,win,"Next_Page");
+    driver.get(theNowSearchText,theNowSearchDriver,win,"Next_Page");
 });

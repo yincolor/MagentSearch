@@ -2,17 +2,18 @@ const clipboard = require('electron').clipboard
 const ipcRenderer = require('electron').ipcRenderer
 
 var theLastSearchText = "";
-
+var theLastSearchDriver = document.getElementById("search-driver-list").value;
+console.log("默认引擎是："+theLastSearchDriver);
 //网页按钮事件集合
 function setMagent(magent_Btn)
 {
-    var magent_Text = magent_Btn.parentNode.children[4].innerHTML;
+    var magent_Text = magent_Btn.parentNode.children[5].innerHTML;
     console.log(magent_Text);
     clipboard.writeText(magent_Text);
 }
 function setThunder(thunder_Btn)
 {
-    var thunder_Text = thunder_Btn.parentNode.children[6].innerHTML;
+    var thunder_Text = thunder_Btn.parentNode.children[7].innerHTML;
     console.log(thunder_Text);
     clipboard.writeText(thunder_Text);
 }
@@ -40,22 +41,29 @@ function loadMoreBtnClicked()
 //向主进程通信,传送需要查询的数据
 function sendSearchToMain(search_text)
 {
-    
-    if(search_text !=theLastSearchText)
+    var search_driver = document.getElementById('search-driver-list').value;
+    if(search_text !=theLastSearchText||search_driver !=theLastSearchDriver)
     {
         document.getElementById("search-list").innerHTML = "";//清空上一个搜索项的数据
         document.getElementById("load-more-button").hidden = true;//重新隐藏加载按钮知道获得新数据
+        theLastSearchText = search_text;
+        theLastSearchDriver = search_driver;
     }
-    ipcRenderer.send("SpliderPlease",search_text);
+    ipcRenderer.send("SpliderPlease",search_text,search_driver);
 
 }
 //监听主进程返回的数据
 ipcRenderer.on("SpliderMsg",function(event,data,type){
     var massage_array = {};
-    //根据类型获取数据列表
+    //根据搜索引擎类型调用相应的函数(manager-driver.js里面的函数)获取数据列表.
     switch(type){
-        case "runbt":massage_array = runbt_getDataList(data);
-        default: break;
+        case "runbt":console.log("调用runbt引擎");massage_array = runbt_getDataList(data);break;
+        case "shenmidizhi":console.log("调用神秘地址引擎");massage_array = shenmidizhi_getDataList(data); break;
+        //case "btcili":console.log("调用btcili引擎");massage_array = shenmidizhi_getDataList(data);break;
+        case "btbit":console.log("调用btbit引擎");massage_array = btbit_getDataList(data); break;
+        case "bearbt":console.log("调用Bt熊引擎");massage_array = bearbt_getDataList(data); break;
+        case "zhongziso":console.log("调用zhongziso引擎");massage_array = zhongziso_getDataList(data); break;
+        default: console.log(data); break;
     }
     
     console.log("共有"+massage_array.length);
@@ -68,7 +76,7 @@ ipcRenderer.on("SpliderMsg",function(event,data,type){
     {
         var item = massage_array[index];
         var li_html = make_li(item.name,item.magent,item.thunder);
-        console.log(li_html);
+        //console.log(li_html);
         $("#search-list").append(li_html);
     }
 });
@@ -86,8 +94,28 @@ ipcRenderer.on("SpliderMsg",function(event,data,type){
 //制作一个li的html对象
 function make_li(name,magent,thunder)
 {
-    var li_html = ["<li><span>" , name , "</span><button onclick=\"setMagent(this)\">复制磁力链接</button><button onclick=\"setThunder(this)\">复制迅雷链接</button><br><span>",magent,"</span><br><span>",thunder,"</span><hr><br></li>"].join("");
-    console.log($.parseHTML(li_html));
+    var li_html = ["<li><span>" , name , "</span><br>"].join("");
+    if(magent!="")
+    {
+        li_html+="<button onclick=\"setMagent(this)\">复制磁力链接</button>";
+    }
+    else
+    {
+        console.log("这个元素没有磁链");
+        li_html+="<button>没有磁力链接</button>"
+    }
+    if(thunder!="")
+    {
+        li_html+="<button onclick=\"setThunder(this)\">复制迅雷链接</button>";
+    }
+    else
+    {
+        console.log("这个元素没有迅雷链接");
+        li_html+="<button>没有迅雷链接</button>"
+    }
+    
+    li_html = [li_html , "<br><span>",magent,"</span><br><span>",thunder,"</span><hr><br></li>"].join("");
+    //console.log($.parseHTML(li_html));
     return $.parseHTML(li_html);
 }
 //

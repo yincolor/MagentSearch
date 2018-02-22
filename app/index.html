@@ -4,31 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>BT搜索</title>
-    <style>
-        #top-bar{
-            width: 100%;
-            height:40px;
-            background-color: #2B2B2B;
-            position: fixed;
-            top: 0px;
-            right: 0px;
-            text-align: center;
-            display: block;
-        }
-        #search-text-input{
-            margin: 2px 2px;
-        }
-        #search-container{
-            margin-top: 50px;
-        }
-    </style>
+    <title>简单的磁力搜索</title>
+    <link rel="stylesheet" href="default.css">
 </head>
 <body style="overflow-x:hidden">
-    <div>
+    <div id="main-box">
         <div id="top-bar">
+            <select name="" id="search-driver-list">
+                        <option value="runbt">RunBt</option>
+                        <option value="shenmidizhi">神秘地址</option>
+                        <option value="btbit">btbit</option>
+                        <option value="bearbt">BT熊</option>
+                        <option value="zhongziso">种子帝</option>
+            </select>
             <input id="search-text-input" class="text"  />
             <input id="search-button-input" type="button" value="搜索" onclick="searchBtnClicked()"/>
+            
         </div>
         <div id="search-container">
             <hr>
