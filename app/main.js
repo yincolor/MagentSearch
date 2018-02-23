@@ -22,11 +22,13 @@ const createWindow = () =>{
         slashes:true
     });
     win.loadURL(URL);
-    //win.webContents.openDevTools();
+    win.webContents.openDevTools();
     win.setMenu(null);
     win.on('close',()=>{
         win = null;
     });
+
+    require("./main-process/Menu");
 }
 
 

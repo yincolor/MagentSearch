@@ -102,7 +102,7 @@ function make_li(name,magent,thunder)
     else
     {
         console.log("这个元素没有磁链");
-        li_html+="<button>没有磁力链接</button>"
+        li_html+="<button hidden>没有磁力链接</button>"
     }
     if(thunder!="")
     {
@@ -111,12 +111,37 @@ function make_li(name,magent,thunder)
     else
     {
         console.log("这个元素没有迅雷链接");
-        li_html+="<button>没有迅雷链接</button>"
+        li_html+="<button hidden>没有迅雷链接</button>"
     }
     
-    li_html = [li_html , "<br><span>",magent,"</span><br><span>",thunder,"</span><hr><br></li>"].join("");
+    li_html = [li_html , "<br><span style=\"display:inline-block;width:60%;word-wrap:break-word;white-space:normal;\" >",magent,"</span><br><span style=\"display:inline-block;width:60%;word-wrap:break-word;white-space:normal;\">",thunder,"</span><hr><br></li>"].join("");
     //console.log($.parseHTML(li_html));
     return $.parseHTML(li_html);
 }
 //
+//判断光标是否在输入框里
+var isOnInput = false;
+document.getElementById("search-text-input").onfocus=function(){
+    console.log("input 获取焦点");
+    isOnInput = true;
+}
+document.getElementById("search-text-input").onblur =function(){
+    console.log("input 失去焦点");
+    isOnInput = false;
+}
 
+document.oncontextmenu = ()=>{
+    var arg1="";
+    if(window.getSelection)
+    {
+        arg1 = window.getSelection().toString();
+    }
+    //console.log("光标是否在输入框内？"+document.getElementById("search-text-input"));
+    ipcRenderer.send("show-pointer-menu",arg1,isOnInput);
+    console.log("光标是否在输入框里？"+isOnInput);
+}
+ipcRenderer.on('PasteText',function(e,arg){
+    console.log("需要粘贴："+arg);
+    document.getElementById("search-text-input").value += arg;
+    
+})
