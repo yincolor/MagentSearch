@@ -5,7 +5,7 @@ electron做的简易磁力搜索（node.js爬虫）
 
 ## 如何运行测试？
 
-第一步：安装electron，sudo apt-get install electron 
+第一步：安装electron
 
 第二步：进入package.json所在的目录 
 
