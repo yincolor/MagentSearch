@@ -33,7 +33,7 @@ function loadMoreBtnClicked()
 {
     ipcRenderer.send("SpliderMorePlease");
     document.getElementById("load-more-button").disabled = true;//使按钮点击失效
-    document.getElementById("load-more-button").value = "正在加载..."
+    document.getElementById("load-more-button").innerHTML = "正在加载..."
 }
 
 
@@ -60,7 +60,7 @@ ipcRenderer.on("SpliderMsg",function(event,data,type){
         case "runbt":console.log("调用runbt引擎");massage_array = runbt_getDataList(data);break;
         case "shenmidizhi":console.log("调用神秘地址引擎");massage_array = shenmidizhi_getDataList(data); break;
         //case "btcili":console.log("调用btcili引擎");massage_array = shenmidizhi_getDataList(data);break;
-        case "btbit":console.log("调用btbit引擎");massage_array = btbit_getDataList(data); break;
+        case "pipicili":console.log("调用btbit引擎");massage_array = pipicili_getDataList(data); break;
         case "bearbt":console.log("调用Bt熊引擎");massage_array = bearbt_getDataList(data); break;
         case "zhongziso":console.log("调用zhongziso引擎");massage_array = zhongziso_getDataList(data); break;
         default: console.log(data); break;
@@ -70,7 +70,7 @@ ipcRenderer.on("SpliderMsg",function(event,data,type){
     //使"获取更多按钮"显示
     document.getElementById("load-more-button").hidden = false;
     document.getElementById("load-more-button").disabled = false;//使按钮点击存活
-    document.getElementById("load-more-button").value = "加载更多"
+    document.getElementById("load-more-button").innerHTML = "加载更多"
     //向ol列表加入更多的li
     for(var index = 0;index<massage_array.length;index++)
     {

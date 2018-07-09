@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./bootstrap.min.css">
+
+    <title>magent search</title>
+    <style>
+        li{
+            list-style-type:none;
+            margin: 0px;
+            padding: 3px;
+        }
+        .ResultItem{
+            text-align: center;
+            background-color: #F2F2F2;
+        }
+        
+        #searchButton:hover{
+            background-color: #7A7A7A;
+            color: #ffffff;
+        }
+        #searchButton:active{
+            background-color: #4F4F4F;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div divname="搜索工具栏" id="search_bar" class="container-fluid" style="padding: 1em;background-color:#8470FF;position:fixed;margin-top: 0em; width: 100%;">
+        <div class="col-sm-3">
+            <select id="search-driver-list" class="form-control" name="search_website" style="width: 100%">
+                <option value="zhongziso">种子帝</option>
+                <option value="bearbt">BT熊</option>
+                <option value="runbt">RunBt</option>
+                <option value="shenmidizhi">神秘地址</option>
+                <option value="pipicili">皮皮磁力</option>
+            </select>
+        </div>
+        <div class="col-sm-6">
+            <input id="search-text-input" class="form-control" type="text" name="search_text" style="width: 100%"/>
+        </div>
+        <div class="col-sm-3">
+            <button id="search-button-input" class="form-control" style="width: 100%" onclick="searchBtnClicked()">搜索</button>
+        </div>
+    </div>
+    <div divname="搜索结果" id="search_result" style="padding-top:62px;" >
+        <hr>
+        <ul id="search-list">
+            
+        </ul>
+        <button id="load-more-button" type="button" onclick="loadMoreBtnClicked()" hidden=true style="height:30px;width:100%">加载更多</button>
+    </div>
+    
+    
+    
+    <script>
+        window.onresize = function(){
+            var h = document.getElementById('search_bar').offsetHeight
+            document.getElementById('search_result').style.paddingTop = h.toString()+"px"
+        }
+        
+        window.$ = window.jQuery = require("./jquery-min");
+    </script>
+    <script src="./renderer-process/renderer-action.js"></script>
+    <script src="./renderer-process/manager-driver.js"></script>
+    <script src="./bootstrap.min.js"></script>
+</body>
+</html>

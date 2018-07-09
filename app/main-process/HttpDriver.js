@@ -37,14 +37,9 @@ exports.get = function(main_searchText,main_searchDriver,main_window,main_action
       req = shenmidizhi_geturl(main_searchText);
       break;
     }
-    case "btcili":
+    case "pipicili":
     {
-      req = btcili_geturl(main_searchText);
-      break;
-    }
-    case "btbit":
-    {
-      req = btbit_geturl(main_searchText);
+      req = pipicili_geturl(main_searchText);
       break;
     }
     case "bearbt":
@@ -89,16 +84,17 @@ exports.get = function(main_searchText,main_searchDriver,main_window,main_action
 }
 
 function runbt_geturl(searchText){
+    //http://www.runbtx.com/list/%E9%AD%94%E5%B0%86/1
     driver_state.search_text = searchText;//设置需要检索的字符串
     var searchPath = ["/list/",searchText,"/",driver_state.search_page_index.toString()].join("");
-    var searchUrl =encodeURI("http://www.runbt.co" + searchPath);//url传输中不支持汉字，所以需要将汉字转化成utf8带%的编码格式
+    var searchUrl =encodeURI("http://www.runbtx.com" + searchPath);//url传输中不支持汉字，所以需要将汉字转化成utf8带%的编码格式
     console.log(searchUrl);
     return {URL:searchUrl,TYPE:"http"};
 }
 
 function shenmidizhi_geturl(searchText)
 {
-  //http://www.shenmidizhi.info/list/%E7%8C%8E%E5%9C%BA-hot-desc-1
+  //http://www.shenmidizhi.info/list/%E9%AD%94%E6%B3%95-hot-desc-3
   driver_state.search_text = searchText;
   var searchPath = ["/list/",searchText,"-hot-desc-",driver_state.search_page_index.toString()].join("");
   var searchUrl = encodeURI("http://www.shenmidizhi.info"+searchPath);
@@ -106,26 +102,16 @@ function shenmidizhi_geturl(searchText)
   return {URL:searchUrl,TYPE:"http"};
 }
 
-function btbit_geturl(searchText)
+function pipicili_geturl(searchText)
 {
-  //http://hk.btbit.xyz/list/%E6%98%A5%E4%B8%BD/1-0-0.html
+  //http://pipicili.net/pipi/%E9%AD%94%E6%B3%95/3/0/0
   driver_state.search_text = searchText;
-  var searchPath = ["/list/",searchText,"/",driver_state.search_page_index.toString(),"-0-0.html"].join("");
-  var searchUrl = encodeURI("http://hk.btbit.xyz"+searchPath);
+  var searchPath = ["/pipi/",searchText,"/",driver_state.search_page_index.toString(),"/0/0"].join("");
+  var searchUrl = encodeURI("http://pipicili.net"+searchPath);
   console.log(searchUrl);
   return {URL:searchUrl,TYPE:"http"};
 }
-/*electron无法获取https的网页，暂时冻结bt磁力搜索
-function btcili_geturl(searchText)
-{
-  //https://www.btcili.cc/cili/%E6%88%98%E7%8B%BC2/default-1.html
-  driver_state.search_text = searchText;
-  var searchPath = ["/cili/",searchText,"/default-",driver_state.search_page_index.toString(),".html"].join("");
-  var searchUrl = encodeURI("https://www.btcili.cc"+searchPath);
-  console.log(searchUrl);
-  return searchUrl;
-}
-*/
+
 function bearbt_geturl(searchText)
 {
   //http://bearbt.com/search/%E5%86%B3%E6%88%98%E4%B8%9B%E6%9E%97/1

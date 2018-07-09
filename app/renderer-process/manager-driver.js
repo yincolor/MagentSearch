@@ -2,6 +2,7 @@
 
 //获取完整的页面有效数据列表
 runbt_getDataList = function(htmlData){
+
     var objE = document.createElement("div"); 
     objE.innerHTML = htmlData;
     var htmlDom = objE.childNodes;
@@ -46,11 +47,11 @@ shenmidizhi_getDataList = function(htmlData){
     return json;
 }
 
-btbit_getDataList = function(htmlData){
+pipicili_getDataList = function(htmlData){
     var objE = document.createElement("div"); 
     objE.innerHTML = htmlData;
     var htmlDom = objE.childNodes;
-    var div_list = $(htmlDom).find("div[class='rs']");
+    var div_list = $(htmlDom).find("div[class='pipibox']");
     console.log(div_list);
 
     var json = [];
@@ -58,7 +59,7 @@ btbit_getDataList = function(htmlData){
     {
         var item = new Object();
         item.name = $(div_list[i]).find("h3")[0].innerText;
-        var sbar = $(div_list[i]).find("div[class='sbar']");
+        var sbar = $(div_list[i]).find("div[class='sort_bar']");
         item.magent = $(sbar).find('a')[0].href;
         item.thunder = "";
         console.log(item);

@@ -17,7 +17,7 @@ const createWindow = () =>{
         height: 600
     });
     const URL = url.format({
-        pathname: path.join(__dirname,"index.html"),
+        pathname: path.join(__dirname,"search.html"),
         protocol:'file',
         slashes:true
     });
